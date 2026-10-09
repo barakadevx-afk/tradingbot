@@ -5,6 +5,7 @@ from typing import Any, Dict
 
 from sqlalchemy import DateTime, func, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker, Session
+from sqlalchemy.pool import NullPool
 
 from app.core.config import settings
 
@@ -31,15 +32,18 @@ class TimestampMixin:
     )
 
 
+engine_options = {"echo": settings.DB_ECHO, "pool_pre_ping": True}
+if settings.is_serverless:
+    engine_options["poolclass"] = NullPool
+else:
+    engine_options.update(
+        pool_size=settings.DB_POOL_SIZE,
+        max_overflow=settings.DB_MAX_OVERFLOW,
+        pool_timeout=settings.DB_POOL_TIMEOUT,
+    )
+
 # Create sync engine (greenlet not available for this Python version)
-engine = create_engine(
-    settings.sync_database_url,
-    echo=settings.DB_ECHO,
-    pool_size=settings.DB_POOL_SIZE,
-    max_overflow=settings.DB_MAX_OVERFLOW,
-    pool_timeout=settings.DB_POOL_TIMEOUT,
-    pool_pre_ping=True,
-)
+engine = create_engine(settings.sync_database_url, **engine_options)
 
 # Create sync session factory
 SessionLocal = sessionmaker(

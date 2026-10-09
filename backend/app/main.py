@@ -35,31 +35,34 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     with SessionLocal() as db:
         provision_admin_user(db)
 
-    # Initialize Redis
-    try:
-        redis_client = redis.from_url(
-            str(settings.REDIS_URL),
-            encoding="utf-8",
-            decode_responses=True,
-        )
-        await redis_client.ping()
-    except Exception:
-        redis_client = None
+    if not settings.is_serverless:
+        try:
+            redis_client = redis.from_url(
+                str(settings.REDIS_URL),
+                encoding="utf-8",
+                decode_responses=True,
+            )
+            await redis_client.ping()
+        except Exception:
+            redis_client = None
 
     # Initialize market data service
     market_data_service = MarketDataService()
 
-    # Start background tasks
-    simulation_task = asyncio.create_task(_run_market_simulation())
+    # Serverless instances are short-lived and cannot reliably run background jobs.
+    simulation_task = None
+    if not settings.is_serverless:
+        simulation_task = asyncio.create_task(_run_market_simulation())
 
     yield
 
     # Shutdown
-    simulation_task.cancel()
-    try:
-        await simulation_task
-    except asyncio.CancelledError:
-        pass
+    if simulation_task:
+        simulation_task.cancel()
+        try:
+            await simulation_task
+        except asyncio.CancelledError:
+            pass
 
     if redis_client:
         await redis_client.close()
@@ -102,7 +105,13 @@ app.add_middleware(
 if settings.is_production:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["*.baraka.ai", "*.onrender.com", "localhost", "*.localhost"],
+        allowed_hosts=[
+            "*.baraka.ai",
+            "*.onrender.com",
+            "*.vercel.app",
+            "localhost",
+            "*.localhost",
+        ],
     )
 
 

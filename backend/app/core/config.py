@@ -1,9 +1,10 @@
 """Application configuration using Pydantic Settings."""
 
+import os
 from functools import lru_cache
 from typing import List, Optional
 
-from pydantic import EmailStr, Field, PostgresDsn, RedisDsn, field_validator
+from pydantic import EmailStr, Field, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -37,7 +38,7 @@ class Settings(BaseSettings):
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_DB: str = "baraka_trading"
-    DATABASE_URL: Optional[str] = None
+    DATABASE_URL: Optional[str] = Field(default=None, validate_default=True)
     DB_POOL_SIZE: int = 20
     DB_MAX_OVERFLOW: int = 10
     DB_POOL_TIMEOUT: int = 30
@@ -98,6 +99,8 @@ class Settings(BaseSettings):
     def assemble_db_url(cls, v, info):
         if isinstance(v, str):
             return v
+        if info.data.get("ENVIRONMENT") == "production":
+            raise ValueError("DATABASE_URL must be configured in production")
         values = info.data
         return f"sqlite:///./baraka.db"
 
@@ -114,6 +117,10 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.ENVIRONMENT == "production"
+
+    @property
+    def is_serverless(self) -> bool:
+        return bool(os.getenv("VERCEL"))
 
     @property
     def async_database_url(self) -> str:
