@@ -3,7 +3,7 @@
 from functools import lru_cache
 from typing import List, Optional
 
-from pydantic import Field, PostgresDsn, RedisDsn, field_validator
+from pydantic import EmailStr, Field, PostgresDsn, RedisDsn, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -55,6 +55,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     JWT_REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+    ADMIN_EMAIL: Optional[EmailStr] = None
+    ADMIN_PASSWORD: Optional[str] = Field(None, min_length=12)
 
     # Trading
     DEFAULT_LEVERAGE: float = 1.0
@@ -121,7 +123,15 @@ class Settings(BaseSettings):
     @property
     def sync_database_url(self) -> str:
         url = str(self.DATABASE_URL)
-        return url.replace("postgresql+asyncpg", "postgresql").replace("postgresql+psycopg2", "postgresql")
+        for prefix in (
+            "postgres://",
+            "postgresql://",
+            "postgresql+asyncpg://",
+            "postgresql+psycopg2://",
+        ):
+            if url.startswith(prefix):
+                return url.replace(prefix, "postgresql+psycopg://", 1)
+        return url
 
 
 @lru_cache

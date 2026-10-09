@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" fill="none">
+  <defs>
+    <linearGradient id="lgf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#20C982"/>
+      <stop offset="100%" stop-color="#0DAE6A"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#0B0D0C"/>
+  <path d="M18 14h14c8.837 0 16 7.163 16 16s-7.163 16-16 16H18V14z" fill="url(#lgf)"/>
+  <path d="M18 14v32" stroke="#0B0D0C" stroke-width="3"/>
+  <rect x="24" y="22" width="4" height="10" rx="1" fill="#0B0D0C"/>
+  <rect x="32" y="26" width="4" height="12" rx="1" fill="#0B0D0C"/>
+  <rect x="40" y="18" width="4" height="14" rx="1" fill="#0B0D0C"/>
+  <line x1="26" y1="18" x2="26" y2="36" stroke="#0B0D0C" stroke-width="1.5"/>
+  <line x1="34" y1="22" x2="34" y2="42" stroke="#0B0D0C" stroke-width="1.5"/>
+  <line x1="42" y1="14" x2="42" y2="36" stroke="#0B0D0C" stroke-width="1.5"/>
+  <text x="76" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="800" fill="#F2F5F2" letter-spacing="0.5">BARAKA</text>
+  <text x="76" y="46" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#20C982" letter-spacing="1.5">TRADING BOT</text>
+</svg>

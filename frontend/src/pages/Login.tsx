@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Brain, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
     clearError();
     try {
       await login(email, password);
-      navigate('/');
+      navigate('/dashboard');
     } catch {
       // Error is handled by store
     }
@@ -33,12 +33,10 @@ export default function Login() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500">
-                <Brain className="h-7 w-7 text-white" />
-              </div>
+              <img src="/logo.svg" alt="BARAKA TRADING BOT" className="w-12 h-12" />
               <div>
-                <h1 className="text-2xl font-bold text-white">BARAKA AI</h1>
-                <p className="text-xs text-slate-500 uppercase tracking-widest">Trade Smarter. Grow Faster.</p>
+                <h1 className="text-2xl font-bold text-white">BARAKA TRADING BOT</h1>
+                <p className="text-xs text-slate-500 uppercase tracking-widest">Smarter Tools. Better Trading Decisions.</p>
               </div>
             </div>
             <h2 className="text-4xl font-bold text-white leading-tight">
@@ -74,10 +72,7 @@ export default function Login() {
           className="w-full max-w-md"
         >
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500">
-              <Brain className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">BARAKA AI</span>
+            <img src="/logo.svg" alt="BARAKA TRADING BOT" className="w-10 h-10" /><span className="text-xl font-bold text-white">BARAKA TRADING BOT</span>
           </div>
 
           <h2 className="text-2xl font-bold text-white">Welcome back</h2>

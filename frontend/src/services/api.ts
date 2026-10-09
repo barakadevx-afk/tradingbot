@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import type { Token } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || '/api/v1').replace(/\/+$/, '');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -43,8 +43,8 @@ api.interceptors.response.use(
         const tokenData = localStorage.getItem('baraka_tokens');
         if (tokenData) {
           const tokens: Token = JSON.parse(tokenData);
-          const refreshResponse = await axios.post(`${API_BASE_URL}/auth/refresh`, {
-            refresh_token: tokens.refresh_token,
+          const refreshResponse = await axios.post(`${API_BASE_URL}/auth/refresh`, null, {
+            params: { refresh_token: tokens.refresh_token },
           });
 
           const newTokens = refreshResponse.data;
@@ -76,7 +76,7 @@ export const authApi = {
   refresh: (data: { refresh_token: string }) =>
     api.post('/auth/refresh', data),
   logout: () => api.post('/auth/logout'),
-  getProfile: () => api.get('/auth/profile'),
+  getProfile: () => api.get('/auth/me'),
   changePassword: (data: { current_password: string; new_password: string }) =>
     api.post('/auth/change-password', data),
 };

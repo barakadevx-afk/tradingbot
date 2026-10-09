@@ -8,47 +8,59 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand colors
+        // Brand colors - Showcase Neon Theme
         primary: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981', // emerald-500 - BUY/profit
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
-          950: '#022c22',
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e', // Vibrant green
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
+          950: '#052e16',
         },
         danger: {
-          50: '#fef2f2',
-          100: '#fee2e2',
-          200: '#fecaca',
-          300: '#fca5a5',
-          400: '#f87171',
-          500: '#ef4444', // red-500 - SELL/loss
-          600: '#dc2626',
-          700: '#b91c1c',
-          800: '#991b1b',
-          900: '#7f1d1d',
-          950: '#450a0a',
+          50: '#fff1f2',
+          100: '#ffe4e6',
+          200: '#fecdd3',
+          300: '#fda4af',
+          400: '#fb7185',
+          500: '#f43f5e', // Vibrant rose/red
+          600: '#e11d48',
+          700: '#be123c',
+          800: '#9f1239',
+          900: '#881337',
+          950: '#4c0519',
         },
         accent: {
-          50: '#ecfeff',
-          100: '#cffafe',
-          200: '#a5f3fc',
-          300: '#67e8f9',
-          400: '#22d3ee', // cyan-400 - highlights
-          500: '#06b6d4',
-          600: '#0891b2',
-          700: '#0e7490',
-          800: '#155e75',
-          900: '#164e63',
-          950: '#083344',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8', // Electric cyan
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
         },
-        // Surface colors
+        brand: {
+          purple: {
+            400: '#c084fc',
+            500: '#a855f7', // Vibrant purple
+            600: '#9333ea',
+          },
+          indigo: {
+            500: '#6366f1',
+            600: '#4f46e5',
+            950: '#0a0b1e', // Deep showcase background
+          }
+        },
+        // Surface colors - Deep Indigo/Slate
         surface: {
           50: '#f8fafc',
           100: '#f1f5f9',
@@ -60,7 +72,7 @@ export default {
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a',
-          950: '#020617', // slate-950 - main background
+          950: '#020412', // Near-black indigo
         },
       },
       fontFamily: {
@@ -71,13 +83,15 @@ export default {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent)',
+        'grid-white': "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e\")",
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-        'glass-sm': '0 4px 16px 0 rgba(0, 0, 0, 0.25)',
-        'glow-primary': '0 0 20px rgba(16, 185, 129, 0.3)',
-        'glow-danger': '0 0 20px rgba(239, 68, 68, 0.3)',
-        'glow-accent': '0 0 20px rgba(34, 211, 238, 0.3)',
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+        'glass-sm': '0 4px 16px 0 rgba(0, 0, 0, 0.4)',
+        'glow-primary': '0 0 20px rgba(34, 197, 94, 0.4)',
+        'glow-danger': '0 0 20px rgba(244, 63, 94, 0.4)',
+        'glow-accent': '0 0 20px rgba(56, 189, 248, 0.4)',
+        'glow-purple': '0 0 20px rgba(168, 85, 247, 0.4)',
         'inner-glow': 'inset 0 0 20px rgba(255, 255, 255, 0.05)',
       },
       backdropBlur: {

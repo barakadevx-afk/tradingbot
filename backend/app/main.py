@@ -1,20 +1,23 @@
 """BARAKA AI Trading Platform - Main Application."""
 
 import asyncio
+import logging
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 import redis.asyncio as redis
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, status
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api.v1 import api_router
+from app.core.admin import provision_admin_user
 from app.core.config import settings
-from app.db.base import create_tables, engine
+from app.db.base import SessionLocal, create_tables, engine
 from app.services.market_data import MarketDataService
 
+logger = logging.getLogger(__name__)
 
 # Global state
 redis_client: redis.Redis | None = None
@@ -29,6 +32,8 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     # Startup
     # Create database tables
     create_tables()
+    with SessionLocal() as db:
+        provision_admin_user(db)
 
     # Initialize Redis
     try:
@@ -59,7 +64,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     if redis_client:
         await redis_client.close()
 
-    await engine.dispose()
+    engine.dispose()
 
 
 async def _run_market_simulation() -> None:
@@ -97,14 +102,19 @@ app.add_middleware(
 if settings.is_production:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["*.baraka.ai", "localhost", "*.localhost"],
+        allowed_hosts=["*.baraka.ai", "*.onrender.com", "localhost", "*.localhost"],
     )
 
 
 # Exception handlers
 @app.exception_handler(Exception)
-async def global_exception_handler(request, exc):
+async def global_exception_handler(request: Request, exc: Exception):
     """Global exception handler."""
+    logger.exception(
+        "Unhandled exception while processing %s %s",
+        request.method,
+        request.url.path,
+    )
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"detail": "Internal server error", "type": "internal_error"},

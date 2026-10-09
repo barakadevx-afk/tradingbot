@@ -3,42 +3,38 @@
 import logging
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.security import get_password_hash
 from app.models.user import User
 
 logger = logging.getLogger(__name__)
 
-# Admin credentials
-ADMIN_EMAIL = "barakatrader@gmail.com"
-ADMIN_PASSWORD = "Baraka@2050!!!"
-ADMIN_FULL_NAME = "BARAKA Admin"
-ADMIN_ROLE = "SUPER_ADMIN"
+def provision_admin_user(db: Session) -> None:
+    """Create or rotate the initial admin account from private environment settings."""
+    if not settings.ADMIN_EMAIL or not settings.ADMIN_PASSWORD:
+        if settings.is_production:
+            raise RuntimeError("ADMIN_EMAIL and ADMIN_PASSWORD must be configured in production")
+        return
 
+    admin = db.query(User).filter(User.email == str(settings.ADMIN_EMAIL)).first()
+    if admin and admin.role not in {"ADMIN", "SUPER_ADMIN"}:
+        raise RuntimeError("Configured ADMIN_EMAIL belongs to a non-admin user")
 
-def create_admin_user(db: Session) -> User:
-    """Create the default admin user if it doesn't exist."""
-    # Check if admin already exists
-    existing = db.query(User).filter(User.email == ADMIN_EMAIL).first()
-    if existing:
-        logger.info("Admin user already exists")
-        return existing
+    if admin is None:
+        admin = User(
+            email=str(settings.ADMIN_EMAIL),
+            full_name="BARAKA Admin",
+            role="SUPER_ADMIN",
+            is_active=True,
+            is_2fa_enabled=False,
+            hashed_password=get_password_hash(settings.ADMIN_PASSWORD),
+        )
+        db.add(admin)
+        logger.info("Initial admin account created")
+    else:
+        admin.hashed_password = get_password_hash(settings.ADMIN_PASSWORD)
+        admin.is_active = True
+        admin.role = "SUPER_ADMIN"
+        logger.info("Initial admin credentials synchronized from environment")
 
-    # Create admin user
-    admin = User(
-        email=ADMIN_EMAIL,
-        hashed_password=get_password_hash(ADMIN_PASSWORD),
-        full_name=ADMIN_FULL_NAME,
-        role=ADMIN_ROLE,
-        is_active=True,
-        is_2fa_enabled=False,
-    )
-    db.add(admin)
     db.commit()
-    db.refresh(admin)
-    logger.info("Admin user created successfully")
-    return admin
-
-
-def verify_admin_credentials(email: str, password: str) -> bool:
-    """Verify admin credentials."""
-    return email == ADMIN_EMAIL and password == ADMIN_PASSWORD

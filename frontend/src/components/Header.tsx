@@ -3,7 +3,7 @@ import { Bell, Search, User, ChevronDown } from 'lucide-react'
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 bg-surface-950/80 backdrop-blur-xl border-b border-surface-700/50">
-      <div className="flex items-center justify-between px-8 py-4">
+      <div className="flex items-center justify-between py-4 pl-16 pr-4 lg:px-8">
         {/* Search */}
         <div className="flex-1 max-w-md">
           <div className="relative">
