@@ -27,6 +27,7 @@ const Journal = lazy(() => import('./pages/Journal'))
 const Settings = lazy(() => import('./pages/Settings'))
 const Users = lazy(() => import('./pages/Users'))
 const AuditLogs = lazy(() => import('./pages/AuditLogs'))
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/users" element={<Users />} />
           <Route path="/audit" element={<AuditLogs />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Route>
 
         {/* Fallback */}

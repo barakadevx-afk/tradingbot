@@ -7,6 +7,7 @@ import {
   Brain,
   Settings,
   Bot,
+  Shield,
 } from 'lucide-react'
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
   { to: '/portfolio', icon: Briefcase, label: 'Portfolio' },
   { to: '/analytics', icon: BarChart3, label: 'Analytics' },
   { to: '/ai-insights', icon: Brain, label: 'AI Insights' },
+  { to: '/admin', icon: Shield, label: 'Admin' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 

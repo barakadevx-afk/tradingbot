@@ -4,6 +4,7 @@ from fastapi import APIRouter
 
 from app.api.v1 import (
     auth,
+    admin,
     markets,
     signals,
     portfolio,
@@ -22,6 +23,7 @@ from app.api.v1 import (
 api_router = APIRouter()
 
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+api_router.include_router(admin.router, prefix="/api/v1", tags=["Admin"])
 api_router.include_router(markets.router, prefix="/markets", tags=["Markets"])
 api_router.include_router(signals.router, prefix="/signals", tags=["Signals"])
 api_router.include_router(portfolio.router, prefix="/portfolio", tags=["Portfolio"])
