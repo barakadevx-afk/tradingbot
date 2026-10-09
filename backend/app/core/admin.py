@@ -13,7 +13,10 @@ def provision_admin_user(db: Session) -> None:
     """Create or rotate the initial admin account from private environment settings."""
     if not settings.ADMIN_EMAIL or not settings.ADMIN_PASSWORD:
         if settings.is_production:
-            raise RuntimeError("ADMIN_EMAIL and ADMIN_PASSWORD must be configured in production")
+            logger.warning(
+                "ADMIN_EMAIL and ADMIN_PASSWORD are not configured; "
+                "skipping initial administrator provisioning"
+            )
         return
 
     admin = db.query(User).filter(User.email == str(settings.ADMIN_EMAIL)).first()
