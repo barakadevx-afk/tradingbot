@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import type { Token } from '../types';
 
+export const API_CONFIGURED = Boolean(import.meta.env.VITE_API_URL) || !import.meta.env.PROD;
 export const API_BASE_URL = (import.meta.env.VITE_API_URL || '/api/v1').replace(/\/+$/, '');
 
 const api = axios.create({

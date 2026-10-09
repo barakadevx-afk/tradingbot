@@ -1,7 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { User, Token } from '../types';
-import { API_BASE_URL } from '../services/api';
+import { API_BASE_URL, API_CONFIGURED } from '../services/api';
+
+function ensureApiConfigured(): void {
+  if (!API_CONFIGURED) {
+    throw new Error(
+      'Account access is unavailable because the trading API has not been deployed yet.',
+    );
+  }
+}
 
 async function getErrorMessage(response: Response, fallback: string): Promise<string> {
   const body = await response.text();
@@ -45,6 +53,7 @@ export const useAuthStore = create<AuthState>()(
       login: async (email: string, password: string) => {
         set({ isLoading: true, error: null });
         try {
+          ensureApiConfigured();
           const response = await fetch(`${API_BASE_URL}/auth/login/json`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -85,6 +94,7 @@ export const useAuthStore = create<AuthState>()(
       register: async (email: string, password: string, full_name: string) => {
         set({ isLoading: true, error: null });
         try {
+          ensureApiConfigured();
           const response = await fetch(`${API_BASE_URL}/auth/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
