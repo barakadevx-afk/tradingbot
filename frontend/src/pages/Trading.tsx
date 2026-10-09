@@ -1,32 +1,23 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
-  TrendingUp,
-  TrendingDown,
-  Activity,
   Brain,
-  Target,
-  Shield,
   ArrowUpRight,
   ArrowDownRight,
-  BarChart3,
-  Clock,
-  Droplets,
 } from 'lucide-react';
-import { CandlestickChart } from '../components/CandlestickChart';
+import CandlestickChart from '../components/CandlestickChart';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import ConfidenceMeter from '../components/ConfidenceMeter';
 import type { Market, Signal } from '../types';
 
 const markets: Market[] = [
-  { symbol: 'BTC/USDT', base: 'BTC', quote: 'USDT', price: 67432.50, change_24h: 2.34, volume_24h: 28500000000, high_24h: 68100, low_24h: 65800, bid: 67430, ask: 67435, spread: 5, spread_percent: 0.007, liquidity_score: 95, volatility: 0.023, is_enabled: true },
-  { symbol: 'ETH/USDT', base: 'ETH', quote: 'USDT', price: 3542.80, change_24h: 1.87, volume_24h: 15200000000, high_24h: 3580, low_24h: 3460, bid: 3542.50, ask: 3543.10, spread: 0.60, spread_percent: 0.017, liquidity_score: 92, volatility: 0.028, is_enabled: true },
-  { symbol: 'SOL/USDT', base: 'SOL', quote: 'USDT', price: 178.45, change_24h: -0.92, volume_24h: 3800000000, high_24h: 182, low_24h: 174, bid: 178.40, ask: 178.50, spread: 0.10, spread_percent: 0.056, liquidity_score: 88, volatility: 0.035, is_enabled: true },
-  { symbol: 'BNB/USDT', base: 'BNB', quote: 'USDT', price: 612.30, change_24h: 0.56, volume_24h: 1900000000, high_24h: 618, low_24h: 605, bid: 612.25, ask: 612.35, spread: 0.10, spread_percent: 0.016, liquidity_score: 90, volatility: 0.021, is_enabled: true },
-  { symbol: 'XRP/USDT', base: 'XRP', quote: 'USDT', price: 0.6234, change_24h: -1.23, volume_24h: 1200000000, high_24h: 0.635, low_24h: 0.615, bid: 0.6232, ask: 0.6236, spread: 0.0004, spread_percent: 0.064, liquidity_score: 85, volatility: 0.032, is_enabled: true },
-  { symbol: 'ADA/USDT', base: 'ADA', quote: 'USDT', price: 0.4521, change_24h: 0.78, volume_24h: 450000000, high_24h: 0.458, low_24h: 0.442, bid: 0.4519, ask: 0.4523, spread: 0.0004, spread_percent: 0.088, liquidity_score: 78, volatility: 0.038, is_enabled: true },
-  { symbol: 'DOGE/USDT', base: 'DOGE', quote: 'USDT', price: 0.1234, change_24h: -2.15, volume_24h: 890000000, high_24h: 0.127, low_24h: 0.121, bid: 0.1233, ask: 0.1235, spread: 0.0002, spread_percent: 0.162, liquidity_score: 75, volatility: 0.045, is_enabled: true },
+  { symbol: 'BTC/USDT', base: 'BTC', quote: 'USDT', price: 67432.50, change_24h: 2.34, volume_24h: 28500000000, high_24h: 68100, low_24h: 65800, bid: 67430, ask: 67435, spread: 5, spread_percent: 0.007, liquidity_score: 95, volatility: 0.023, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
+  { symbol: 'ETH/USDT', base: 'ETH', quote: 'USDT', price: 3542.80, change_24h: 1.87, volume_24h: 15200000000, high_24h: 3580, low_24h: 3460, bid: 3542.50, ask: 3543.10, spread: 0.60, spread_percent: 0.017, liquidity_score: 92, volatility: 0.028, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
+  { symbol: 'SOL/USDT', base: 'SOL', quote: 'USDT', price: 178.45, change_24h: -0.92, volume_24h: 3800000000, high_24h: 182, low_24h: 174, bid: 178.40, ask: 178.50, spread: 0.10, spread_percent: 0.056, liquidity_score: 88, volatility: 0.035, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
+  { symbol: 'BNB/USDT', base: 'BNB', quote: 'USDT', price: 612.30, change_24h: 0.56, volume_24h: 1900000000, high_24h: 618, low_24h: 605, bid: 612.25, ask: 612.35, spread: 0.10, spread_percent: 0.016, liquidity_score: 90, volatility: 0.021, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
+  { symbol: 'XRP/USDT', base: 'XRP', quote: 'USDT', price: 0.6234, change_24h: -1.23, volume_24h: 1200000000, high_24h: 0.635, low_24h: 0.615, bid: 0.6232, ask: 0.6236, spread: 0.0004, spread_percent: 0.064, liquidity_score: 85, volatility: 0.032, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
+  { symbol: 'ADA/USDT', base: 'ADA', quote: 'USDT', price: 0.4521, change_24h: 0.78, volume_24h: 450000000, high_24h: 0.458, low_24h: 0.442, bid: 0.4519, ask: 0.4523, spread: 0.0004, spread_percent: 0.088, liquidity_score: 78, volatility: 0.038, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
+  { symbol: 'DOGE/USDT', base: 'DOGE', quote: 'USDT', price: 0.1234, change_24h: -2.15, volume_24h: 890000000, high_24h: 0.127, low_24h: 0.121, bid: 0.1233, ask: 0.1235, spread: 0.0002, spread_percent: 0.162, liquidity_score: 75, volatility: 0.045, is_enabled: true, asset_class: 'crypto', exchange: 'Binance' },
 ];
 
 const currentSignal: Signal = {

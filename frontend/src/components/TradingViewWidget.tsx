@@ -3,15 +3,16 @@ import { useEffect, useRef } from 'react';
 interface TradingViewWidgetProps {
   symbol: string;
   theme?: 'light' | 'dark';
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
 }
 
 export default function TradingViewWidget({ symbol, theme = 'dark', height = 500, width = '100%' }: TradingViewWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
 
     const script = document.createElement('script');
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
@@ -50,8 +51,8 @@ export default function TradingViewWidget({ symbol, theme = 'dark', height = 500
       support_host: 'https://www.tradingview.com',
     });
 
-    containerRef.current.innerHTML = '';
-    containerRef.current.appendChild(script);
+    container.innerHTML = '';
+    container.appendChild(script);
 
     return () => {
       if (containerRef.current) {

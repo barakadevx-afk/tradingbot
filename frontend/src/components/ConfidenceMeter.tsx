@@ -23,7 +23,7 @@ export default function ConfidenceMeter({ value, label, size = 'md', showLabel =
   };
 
   const heights = { sm: 'h-1.5', md: 'h-2.5', lg: 'h-4' };
-  const textSizes = { sm: 'text-xs', md: 'text-sm', lg: 'text-lg' };
+
 
   return (
     <div className="w-full">

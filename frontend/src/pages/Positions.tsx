@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeftRight, ArrowUpRight, ArrowDownRight, X } from 'lucide-react';
+import { ArrowLeftRight, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import EmptyState from '../components/EmptyState';
 import type { Position } from '../types';

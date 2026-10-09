@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ScrollText, ArrowUpRight, ArrowDownRight, Filter } from 'lucide-react';
+import { ScrollText, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import EmptyState from '../components/EmptyState';
 import type { Trade } from '../types';

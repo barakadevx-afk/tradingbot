@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { Briefcase, TrendingUp, TrendingDown, PieChart as PieIcon } from 'lucide-react';
+import { Briefcase, TrendingUp } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import GlassCard from '../components/GlassCard';
 import MetricCard from '../components/MetricCard';

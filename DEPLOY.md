@@ -8,6 +8,8 @@ This repository can be deployed as three services:
 
 Deployment configuration does not create cloud projects or transfer local database contents. Create each service in its provider dashboard and keep all passwords, connection strings, and generated secrets private.
 
+GitHub Actions validates the frontend build and backend Python syntax. Connect the repository to Vercel and Render to enable their Git-based deployments; the workflow does not publish to GitHub Pages or deploy a Supabase Edge Function.
+
 ## 1. Create the Supabase database
 
 1. Create a Supabase project and wait for provisioning to finish.

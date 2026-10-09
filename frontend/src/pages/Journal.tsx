@@ -1,160 +1,95 @@
-﻿import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen, ArrowUpRight, ArrowDownRight, Filter, Download } from 'lucide-react';
+﻿import { Download } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
-import EmptyState from '../components/EmptyState';
-import type { Trade } from '../types';
 
-const journalEntries: Trade[] = [
-  { trade_id: 'trade-001', symbol: 'BTC/USDT', direction: 'long', entry_price: 66800, exit_price: 67432, quantity: 0.029, stop_loss: 66200, take_profit: 70500, strategy: 'Trend Following', ai_model: 'v2.1.0', signal_confidence: 78, market_regime: 'TREND_UP', fees: 0.68, slippage: 3, profit_loss: 18.33, return_percent: 0.95, risk_percent: 0.5, duration: '2h 15m', exit_reason: 'Signal', opened_at: new Date(Date.now() - 7200000).toISOString(), closed_at: new Date(Date.now() - 3600000).toISOString() },
-  { trade_id: 'trade-002', symbol: 'ETH/USDT', direction: 'long', entry_price: 3510, exit_price: 3542, quantity: 0.23, stop_loss: 3480, take_profit: 3680, strategy: 'Pullback', ai_model: 'v2.1.0', signal_confidence: 72, market_regime: 'TREND_UP', fees: 0.40, slippage: 2, profit_loss: 7.36, return_percent: 0.91, risk_percent: 0.5, duration: '4h 30m', exit_reason: 'Signal', opened_at: new Date(Date.now() - 14400000).toISOString(), closed_at: new Date(Date.now() - 7200000).toISOString() },
-  { trade_id: 'trade-003', symbol: 'BTC/USDT', direction: 'short', entry_price: 68100, exit_price: 67500, quantity: 0.015, stop_loss: 69500, take_profit: 65000, strategy: 'Trend Following', ai_model: 'v2.1.0', signal_confidence: 81, market_regime: 'TREND_DOWN', fees: 0.51, slippage: 5, profit_loss: 9.00, return_percent: 1.0, risk_percent: 0.5, duration: '6h 45m', exit_reason: 'Take Profit', opened_at: new Date(Date.now() - 21600000).toISOString(), closed_at: new Date(Date.now() - 14400000).toISOString() },
-  { trade_id: 'trade-004', symbol: 'SOL/USDT', direction: 'long', entry_price: 175, exit_price: 172, quantity: 5.6, stop_loss: 170, take_profit: 190, strategy: 'Breakout', ai_model: 'v2.1.0', signal_confidence: 65, market_regime: 'BREAKOUT', fees: 0.35, slippage: 1.5, profit_loss: -16.80, return_percent: -1.71, risk_percent: 0.5, duration: '3h 20m', exit_reason: 'Stop Loss', opened_at: new Date(Date.now() - 28800000).toISOString(), closed_at: new Date(Date.now() - 25200000).toISOString() },
-  { trade_id: 'trade-005', symbol: 'BNB/USDT', direction: 'long', entry_price: 605, exit_price: 612, quantity: 1.2, stop_loss: 600, take_profit: 625, strategy: 'Pullback', ai_model: 'v2.1.0', signal_confidence: 68, market_regime: 'RANGE', fees: 0.22, slippage: 0.8, profit_loss: 8.40, return_percent: 1.16, risk_percent: 0.5, duration: '5h 10m', exit_reason: 'Signal', opened_at: new Date(Date.now() - 36000000).toISOString(), closed_at: new Date(Date.now() - 32400000).toISOString() },
-  { trade_id: 'trade-006', symbol: 'BTC/USDT', direction: 'long', entry_price: 65200, exit_price: 64800, quantity: 0.025, stop_loss: 64500, take_profit: 67000, strategy: 'Trend Following', ai_model: 'v2.1.0', signal_confidence: 74, market_regime: 'TREND_UP', fees: 0.60, slippage: 4, profit_loss: -10.00, return_percent: -0.61, risk_percent: 0.5, duration: '8h 12m', exit_reason: 'Stop Loss', opened_at: new Date(Date.now() - 43200000).toISOString(), closed_at: new Date(Date.now() - 36000000).toISOString() },
-  { trade_id: 'trade-007', symbol: 'ETH/USDT', direction: 'short', entry_price: 3600, exit_price: 3550, quantity: 0.20, stop_loss: 3680, take_profit: 3400, strategy: 'Mean Reversion', ai_model: 'v1.2.0', signal_confidence: 62, market_regime: 'RANGE', fees: 0.35, slippage: 2.5, profit_loss: 10.00, return_percent: 1.39, risk_percent: 0.5, duration: '12h 45m', exit_reason: 'Take Profit', opened_at: new Date(Date.now() - 50400000).toISOString(), closed_at: new Date(Date.now() - 36000000).toISOString() },
+const journalEntries = [
+  { id: '1', date: '2024-01-15', symbol: 'BTC/USDT', side: 'Long' as const, entry: 67432, exit: null, pnl: null, status: 'open' as const, strategy: 'Trend Following', confidence: 78 },
+  { id: '2', date: '2024-01-14', symbol: 'ETH/USDT', side: 'Long' as const, entry: 3510, exit: 3542, pnl: 7.36, status: 'closed' as const, strategy: 'Pullback', confidence: 72 },
+  { id: '3', date: '2024-01-14', symbol: 'SOL/USDT', side: 'Short' as const, entry: 182, exit: 178.45, pnl: 19.88, status: 'closed' as const, strategy: 'Breakout', confidence: 65 },
+  { id: '4', date: '2024-01-13', symbol: 'BTC/USDT', side: 'Long' as const, entry: 65200, exit: 64800, pnl: -10.0, status: 'closed' as const, strategy: 'Trend Following', confidence: 74 },
+  { id: '5', date: '2024-01-12', symbol: 'BNB/USDT', side: 'Long' as const, entry: 605, exit: 612, pnl: 8.4, status: 'closed' as const, strategy: 'Pullback', confidence: 68 },
 ];
 
 export default function Journal() {
-  const [filter, setFilter] = useState('all');
-
-  const filtered = journalEntries.filter((t) => {
-    if (filter === 'all') return true;
-    if (filter === 'profit') return t.profit_loss > 0;
-    if (filter === 'loss') return t.profit_loss < 0;
-    return true;
-  });
-
-  const totalPnl = journalEntries.reduce((sum, t) => sum + t.profit_loss, 0);
-  const winRate = (journalEntries.filter((t) => t.profit_loss > 0).length / journalEntries.length) * 100;
-  const avgWin = journalEntries.filter((t) => t.profit_loss > 0).reduce((sum, t) => sum + t.profit_loss, 0) / journalEntries.filter((t) => t.profit_loss > 0).length;
-  const avgLoss = journalEntries.filter((t) => t.profit_loss < 0).reduce((sum, t) => sum + t.profit_loss, 0) / journalEntries.filter((t) => t.profit_loss < 0).length;
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Trading Journal</h1>
-          <p className="text-sm text-slate-400">Automatic trade recording with full metadata</p>
+          <p className="text-sm text-slate-400">Review your past trades and decisions</p>
         </div>
-        <div className="flex items-center gap-3">
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="rounded-lg border border-slate-700 bg-slate-900/50 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none"
-          >
-            <option value="all">All Trades</option>
-            <option value="profit">Profitable</option>
-            <option value="loss">Losses</option>
-          </select>
-          <button className="flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 transition-colors">
-            <Download className="h-4 w-4" />
-            Export
-          </button>
-        </div>
+        <button className="flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 transition-colors">
+          <Download className="h-4 w-4" />
+          Export
+        </button>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <GlassCard className="p-4">
-          <p className="text-xs text-slate-500">Total P&L</p>
-          <p className={	ext-xl font-bold }>
-            {totalPnl >= 0 ? '+' : ''}
-          </p>
+          <p className="text-xs text-slate-500">Total Trades</p>
+          <p className="text-xl font-bold text-white mt-1">{journalEntries.length}</p>
         </GlassCard>
         <GlassCard className="p-4">
           <p className="text-xs text-slate-500">Win Rate</p>
-          <p className="text-xl font-bold text-white">{winRate.toFixed(1)}%</p>
+          <p className="text-xl font-bold text-emerald-400 mt-1">60%</p>
         </GlassCard>
         <GlassCard className="p-4">
-          <p className="text-xs text-slate-500">Avg Win</p>
-          <p className="text-xl font-bold text-emerald-400">+</p>
+          <p className="text-xs text-slate-500">Net P&L</p>
+          <p className="text-xl font-bold text-emerald-400 mt-1">+$25.64</p>
         </GlassCard>
         <GlassCard className="p-4">
-          <p className="text-xs text-slate-500">Avg Loss</p>
-          <p className="text-xl font-bold text-red-400"></p>
+          <p className="text-xs text-slate-500">Avg Confidence</p>
+          <p className="text-xl font-bold text-white mt-1">71%</p>
         </GlassCard>
       </div>
 
-      {/* Journal Entries */}
-      {filtered.length === 0 ? (
-        <EmptyState
-          icon={<BookOpen className="h-8 w-8" />}
-          title="No journal entries"
-          description="Trades will be automatically recorded here."
-        />
-      ) : (
-        <div className="space-y-3">
-          {filtered.map((trade, i) => (
-            <motion.div
-              key={trade.trade_id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.03 }}
-            >
-              <GlassCard className="p-4" hover>
-                <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                  <div className="flex items-center gap-3 flex-1">
-                    <div className={lex h-10 w-10 items-center justify-center rounded-lg }>
-                      {trade.direction === 'long' ? <ArrowUpRight className="h-5 w-5" /> : <ArrowDownRight className="h-5 w-5" />}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-bold text-white">{trade.symbol}</h3>
-                        <span className={	ext-[10px] font-semibold px-1.5 py-0.5 rounded }>
-                          {trade.direction.toUpperCase()}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-500">
-                        {trade.strategy} • {trade.market_regime} • Confidence: {trade.signal_confidence}%
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 text-xs">
-                    <div className="text-center">
-                      <p className="text-slate-500">Entry</p>
-                      <p className="font-semibold text-white"></p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-500">Exit</p>
-                      <p className="font-semibold text-white"></p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-500">Qty</p>
-                      <p className="font-semibold text-white">{trade.quantity}</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-500">Fees</p>
-                      <p className="font-semibold text-white"></p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-500">Slippage</p>
-                      <p className="font-semibold text-white"></p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-500">Duration</p>
-                      <p className="font-semibold text-white">{trade.duration}</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-500">P&L</p>
-                      <p className={ont-bold }>
-                        {trade.profit_loss >= 0 ? '+' : ''}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-3 pt-3 border-t border-slate-800/50 flex items-center justify-between text-[10px] text-slate-500">
-                  <span>Exit: {trade.exit_reason}</span>
-                  <span>Risk: {trade.risk_percent}%</span>
-                  <span>Model: {trade.ai_model}</span>
-                  <span>{new Date(trade.opened_at).toLocaleString()}</span>
-                </div>
-              </GlassCard>
-            </motion.div>
-          ))}
+      <GlassCard className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-slate-800 bg-slate-900/50">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Date</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Symbol</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Side</th>
+                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">Entry</th>
+                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">Exit</th>
+                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">P&L</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Strategy</th>
+                <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider text-slate-500">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/50">
+              {journalEntries.map((entry) => (
+                <tr key={entry.id} className="hover:bg-slate-800/30 transition-colors">
+                  <td className="px-4 py-3 text-xs text-slate-500">{entry.date}</td>
+                  <td className="px-4 py-3 text-sm font-medium text-white">{entry.symbol}</td>
+                  <td className="px-4 py-3">
+                    <span className={`text-xs font-semibold ${entry.side === 'Long' ? 'text-emerald-400' : 'text-red-400'}`}>
+                      {entry.side}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-slate-300 text-right">${entry.entry.toLocaleString()}</td>
+                  <td className="px-4 py-3 text-sm text-slate-300 text-right">
+                    {entry.exit ? `$${entry.exit.toLocaleString()}` : '—'}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-right">
+                    {entry.pnl !== null ? (
+                      <span className={entry.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}>
+                        {entry.pnl >= 0 ? '+' : ''}${entry.pnl.toFixed(2)}
+                      </span>
+                    ) : '—'}
+                  </td>
+                  <td className="px-4 py-3 text-xs text-slate-400">{entry.strategy}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span className={`text-xs font-semibold px-2 py-1 rounded ${entry.status === 'open' ? 'bg-amber-500/10 text-amber-400' : 'bg-slate-800 text-slate-400'}`}>
+                      {entry.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+      </GlassCard>
     </div>
   );
 }

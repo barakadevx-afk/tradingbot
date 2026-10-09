@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Play, Pause, Copy, Settings, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Layers, Play, Pause, Copy, Settings } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import type { Strategy } from '../types';

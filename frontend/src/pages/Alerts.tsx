@@ -1,25 +1,22 @@
 ﻿import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, CheckCircle, AlertTriangle, XCircle, Info, Filter } from 'lucide-react';
+import { Bell, CheckCircle, AlertTriangle, XCircle, Info } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import EmptyState from '../components/EmptyState';
 import type { Alert } from '../types';
 
 const demoAlerts: Alert[] = [
-  { id: 'alert-001', type: 'signal', title: 'High-Confidence BUY Signal', message: 'BTC/USDT: BUY signal generated with 78% confidence. Trend Following strategy, R:R 1:2.4.', severity: 'info', read: false, created_at: new Date(Date.now() - 1800000).toISOString() },
-  { id: 'alert-002', type: 'trade_opened', title: 'Trade Opened', message: 'BTC/USDT long position opened at ,432. Quantity: 0.029 BTC. Stop loss: ,200.', severity: 'info', read: false, created_at: new Date(Date.now() - 3600000).toISOString() },
-  { id: 'alert-003', type: 'trade_closed', title: 'Trade Closed', message: 'ETH/USDT long position closed at ,542. P&L: +.36 (+0.91%). Exit reason: Signal.', severity: 'info', read: true, created_at: new Date(Date.now() - 7200000).toISOString() },
-  { id: 'alert-004', type: 'drawdown', title: 'Drawdown Warning', message: 'Portfolio drawdown reached 4.5%. Approaching 10% maximum drawdown limit.', severity: 'warning', read: false, created_at: new Date(Date.now() - 10800000).toISOString() },
-  { id: 'alert-005', type: 'stop_loss', title: 'Stop Loss Triggered', message: 'SOL/USDT long position stopped out at . Loss: -.80 (-1.71%).', severity: 'critical', read: true, created_at: new Date(Date.now() - 14400000).toISOString() },
-  { id: 'alert-006', type: 'exchange', title: 'Exchange Connected', message: 'Binance testnet connection established. WebSocket feed active.', severity: 'info', read: true, created_at: new Date(Date.now() - 18000000).toISOString() },
-  { id: 'alert-007', type: 'model', title: 'Model Drift Detected', message: 'BARAKA Range Detector v1.2.0 showing medium feature drift. Monitoring closely.', severity: 'warning', read: true, created_at: new Date(Date.now() - 21600000).toISOString() },
-  { id: 'alert-008', type: 'kill_switch', title: 'Kill Switch Ready', message: 'Kill switch is armed and functioning. All systems nominal.', severity: 'info', read: true, created_at: new Date(Date.now() - 25200000).toISOString() },
+  { id: 'alert-001', type: 'signal', title: 'New signal generated', message: 'A new trading signal has been generated for BTC/USDT.', severity: 'info', read: false, created_at: '2024-01-15T10:30:00Z' },
+  { id: 'alert-002', type: 'trade_opened', title: 'Trade opened', message: 'Your paper trade for ETH/USDT has been opened.', severity: 'info', read: false, created_at: '2024-01-15T09:15:00Z' },
+  { id: 'alert-003', type: 'stop_loss', title: 'Stop loss triggered', message: 'Stop loss was triggered on SOL/USDT position.', severity: 'critical', read: true, created_at: '2024-01-14T16:45:00Z' },
+  { id: 'alert-004', type: 'drawdown', title: 'Drawdown warning', message: 'Portfolio drawdown has reached 5%.', severity: 'warning', read: true, created_at: '2024-01-14T14:20:00Z' },
+  { id: 'alert-005', type: 'system', title: 'System update', message: 'The trading engine has been updated to v2.1.', severity: 'info', read: true, created_at: '2024-01-13T08:00:00Z' },
 ];
 
 const severityConfig = {
-  info: { icon: Info, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
-  warning: { icon: AlertTriangle, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
-  critical: { icon: XCircle, color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' },
+  info: { icon: Info, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+  warning: { icon: AlertTriangle, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+  critical: { icon: XCircle, color: 'text-red-400', bg: 'bg-red-500/10' },
 };
 
 export default function Alerts() {
@@ -75,11 +72,11 @@ export default function Alerts() {
         <EmptyState
           icon={<Bell className="h-8 w-8" />}
           title="No alerts"
-          description="Alerts will appear here when events occur."
+          description="You're all caught up. New alerts will appear here."
         />
       ) : (
         <div className="space-y-2">
-          {filteredAlerts.map((alert, i) => {
+          {filteredAlerts.map((alert) => {
             const config = severityConfig[alert.severity];
             const Icon = config.icon;
             return (
@@ -87,11 +84,11 @@ export default function Alerts() {
                 key={alert.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.03 }}
+                transition={{ duration: 0.2 }}
               >
-                <GlassCard className={p-4 }>
+                <GlassCard className="p-4">
                   <div className="flex items-start gap-3">
-                    <div className={lex h-8 w-8 items-center justify-center rounded-lg   flex-shrink-0}>
+                    <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${config.bg} ${config.color}`}>
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="flex-1 min-w-0">

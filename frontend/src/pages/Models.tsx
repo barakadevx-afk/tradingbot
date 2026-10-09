@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, CheckCircle, XCircle, Eye, GitCompare, AlertTriangle } from 'lucide-react';
+import { Cpu, CheckCircle, XCircle, Eye } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import type { AIModel } from '../types';

@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Target, Calendar, Clock, Activity } from 'lucide-react';
+import { BarChart3, TrendingUp, Target, Activity } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import GlassCard from '../components/GlassCard';
 import MetricCard from '../components/MetricCard';

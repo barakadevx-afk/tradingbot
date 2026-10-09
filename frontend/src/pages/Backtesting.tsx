@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FlaskConical, Play, Calendar, TrendingUp, TrendingDown, Target, BarChart3 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { Play, TrendingUp, TrendingDown, Target, BarChart3 } from 'lucide-react';
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import GlassCard from '../components/GlassCard';
 import MetricCard from '../components/MetricCard';
-import StatusBadge from '../components/StatusBadge';
 
 const strategies = ['Trend Following', 'Breakout', 'Pullback', 'Mean Reversion', 'SMA Crossover', 'RSI Reversal'];
 const symbols = ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT', 'XRP/USDT'];

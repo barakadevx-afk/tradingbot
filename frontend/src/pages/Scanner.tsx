@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Radar, ArrowUpRight, ArrowDownRight, Minus, AlertCircle } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, AlertCircle } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import ConfidenceMeter from '../components/ConfidenceMeter';

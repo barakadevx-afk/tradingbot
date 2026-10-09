@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Shield, AlertTriangle, Save, RotateCcw, Activity, TrendingDown, Lock } from 'lucide-react';
+import { AlertTriangle, Save, RotateCcw } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
-import MetricCard from '../components/MetricCard';
 
 export default function Risk() {
   const [config, setConfig] = useState({

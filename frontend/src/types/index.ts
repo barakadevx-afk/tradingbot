@@ -9,6 +9,7 @@ export type ModelStatus = 'DRAFT' | 'TESTING' | 'APPROVED' | 'PRODUCTION' | 'RET
 export type MarketRegime = 'TREND_UP' | 'TREND_DOWN' | 'RANGE' | 'BREAKOUT' | 'BREAKDOWN' | 'HIGH_VOLATILITY' | 'LOW_VOLATILITY' | 'UNCERTAIN';
 export type SystemStatus = 'HEALTHY' | 'WARNING' | 'CRITICAL' | 'OFFLINE';
 export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'TRADER' | 'ANALYST' | 'VIEWER';
+export type AssetClass = 'crypto' | 'forex' | 'stock' | 'commodity';
 
 export interface User {
   id: string;
@@ -44,6 +45,8 @@ export interface Market {
   liquidity_score: number;
   volatility: number;
   is_enabled: boolean;
+  asset_class: AssetClass;
+  exchange: string;
 }
 
 export interface Candle {
@@ -295,4 +298,35 @@ export interface Performance {
   by_hour: Record<string, number>;
   by_regime: Record<string, number>;
   by_strategy: Record<string, number>;
+}
+
+export interface ExchangeAdapter {
+  name: string;
+  status: 'connected' | 'disconnected' | 'error';
+  supportedMarkets: string[];
+  latency_ms: number;
+}
+
+export interface ForexPair {
+  symbol: string;
+  base: string;
+  quote: string;
+  price: number;
+  change: number;
+  volume: number;
+  spread: number;
+}
+
+export interface CryptoAsset {
+  symbol: string;
+  name: string;
+  price: number;
+  change_24h: number;
+  market_cap: number;
+  volume_24h: number;
+  circulating_supply: number;
+  total_supply: number;
+  ath: number;
+  atl: number;
+  rank: number;
 }

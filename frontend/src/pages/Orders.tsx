@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { History, ArrowUpRight, ArrowDownRight, X, Clock } from 'lucide-react';
+import { History, ArrowUpRight, ArrowDownRight, X } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import StatusBadge from '../components/StatusBadge';
 import EmptyState from '../components/EmptyState';
