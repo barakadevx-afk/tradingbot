@@ -110,9 +110,9 @@ export default function Sidebar() {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-6 border-b border-surface-700/50">
-          <img src="/logo.svg" alt="BARAKA TRADING BOT" className="w-9 h-9" />
+          <img src="/logo.svg" alt="BarakaTrading Robot" className="w-9 h-9" />
           <div>
-            <h1 className="text-sm font-bold text-surface-100 tracking-tight">BARAKA TRADING BOT</h1>
+            <h1 className="text-sm font-bold text-surface-100 tracking-tight">BARAKATRADING ROBOT</h1>
             <p className="text-[10px] text-surface-500">Trading Platform</p>
           </div>
         </div>

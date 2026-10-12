@@ -19,7 +19,7 @@ api.interceptors.request.use(
     if (tokenData) {
       try {
         const tokens: Token = JSON.parse(tokenData);
-        if (tokens.access_token) {
+        if (tokens.access_token && !config.headers.Authorization) {
           config.headers.Authorization = `Bearer ${tokens.access_token}`;
         }
       } catch {
@@ -77,7 +77,10 @@ export const authApi = {
   refresh: (data: { refresh_token: string }) =>
     api.post('/auth/refresh', data),
   logout: () => api.post('/auth/logout'),
-  getProfile: () => api.get('/auth/me'),
+  getProfile: (accessToken?: string) =>
+    api.get('/auth/me', accessToken
+      ? { headers: { Authorization: `Bearer ${accessToken}` } }
+      : undefined),
   changePassword: (data: { current_password: string; new_password: string }) =>
     api.post('/auth/change-password', data),
 };

@@ -25,6 +25,6 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "/api/v1"
+    "VITE_API_URL": "https://baraka-api-us51.onrender.com/api/v1"
   }
 }

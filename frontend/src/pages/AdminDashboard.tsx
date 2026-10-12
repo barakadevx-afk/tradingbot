@@ -112,7 +112,7 @@ export default function AdminDashboard() {
         >
           <div className="text-center mb-8">
             <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 mb-4">
-              <img src="/logo.svg" alt="BARAKA TRADING BOT" className="w-10 h-10" />
+              <img src="/logo.svg" alt="BarakaTrading Robot" className="w-10 h-10" />
             </div>
             <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
             <p className="text-sm text-slate-400 mt-1">Sign in with an administrator account</p>
@@ -185,7 +185,7 @@ export default function AdminDashboard() {
             <Shield className="h-6 w-6 text-purple-400" />
             Admin Dashboard
           </h1>
-          <p className="text-sm text-slate-400">BARAKA AI Management Console</p>
+          <p className="text-sm text-slate-400">BarakaTrading Robot Management Console</p>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-slate-400">{user.email}</span>

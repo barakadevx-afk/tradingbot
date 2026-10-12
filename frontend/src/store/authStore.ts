@@ -66,7 +66,7 @@ export const useAuthStore = create<AuthState>()(
             expires_in: loginResponse.data.expires_in || 1800,
           };
 
-          const profileResponse = await authApi.getProfile();
+          const profileResponse = await authApi.getProfile(tokens.access_token);
           const user = profileResponse.data as User;
 
           localStorage.setItem('baraka_tokens', JSON.stringify(tokens));

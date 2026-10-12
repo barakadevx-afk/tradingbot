@@ -76,9 +76,9 @@ export default function Landing() {
     <div className="landing-page min-h-screen overflow-hidden bg-surface-950 text-surface-100">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.07] bg-surface-950/85 backdrop-blur-xl">
         <nav aria-label="Main navigation" className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 lg:px-8">
-          <Link to="/" className="flex items-center gap-3" aria-label="BARAKA home">
+          <Link to="/" className="flex items-center gap-3" aria-label="BarakaTrading Robot home">
             <img src="/logo.svg" alt="" className="h-9 w-9" />
-            <span className="text-sm font-bold tracking-[0.12em] text-white">BARAKA<span className="ml-1.5 text-[9px] font-medium tracking-[0.2em] text-surface-400">TRADING BOT</span></span>
+            <span className="text-sm font-bold tracking-[0.12em] text-white">BARAKA<span className="ml-1.5 text-[9px] font-medium tracking-[0.2em] text-surface-400">TRADING ROBOT</span></span>
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -339,7 +339,7 @@ export default function Landing() {
         <div className="mx-auto flex max-w-7xl flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <img src="/logo.svg" alt="" className="h-7 w-7" />
-            <span className="text-xs font-bold tracking-[0.12em] text-surface-200">BARAKA <span className="font-medium tracking-[0.16em] text-surface-500">TRADING BOT</span></span>
+            <span className="text-xs font-bold tracking-[0.12em] text-surface-200">BARAKA <span className="font-medium tracking-[0.16em] text-surface-500">TRADING ROBOT</span></span>
           </Link>
           <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-surface-500">
             <a href="#features" className="transition hover:text-surface-200">Features</a>

@@ -33,9 +33,9 @@ export default function Login() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center gap-3 mb-8">
-              <img src="/logo.svg" alt="BARAKA TRADING BOT" className="w-12 h-12" />
+              <img src="/logo.svg" alt="BarakaTrading Robot" className="w-12 h-12" />
               <div>
-                <h1 className="text-2xl font-bold text-white">BARAKA TRADING BOT</h1>
+                <h1 className="text-2xl font-bold text-white">BARAKATRADING ROBOT</h1>
                 <p className="text-xs text-slate-500 uppercase tracking-widest">Smarter Tools. Better Trading Decisions.</p>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function Login() {
           className="w-full max-w-md"
         >
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <img src="/logo.svg" alt="BARAKA TRADING BOT" className="w-10 h-10" /><span className="text-xl font-bold text-white">BARAKA TRADING BOT</span>
+            <img src="/logo.svg" alt="BarakaTrading Robot" className="w-10 h-10" /><span className="text-xl font-bold text-white">BARAKATRADING ROBOT</span>
           </div>
 
           <h2 className="text-2xl font-bold text-white">Welcome back</h2>
