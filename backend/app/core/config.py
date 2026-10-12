@@ -31,6 +31,7 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://localhost:5173",
         "https://tradingbot-utyx.vercel.app",
+        "https://tradingbot-om7q.onrender.com",
     ]
     CORS_ALLOW_CREDENTIALS: bool = True
     CORS_ALLOW_METHODS: List[str] = ["*"]

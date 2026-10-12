@@ -13,12 +13,27 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password."""
-    return pwd_context.verify(plain_password, hashed_password)
+    import hashlib, base64
+    # Check if it's a base64-encoded SHA256 hash (our format)
+    try:
+        decoded = base64.b64decode(hashed_password)
+        if len(decoded) == 32:  # SHA256 hash length
+            # Generate hash with same method (note: this is simplified)
+            # In production, use proper salt storage
+            test_hash = base64.b64encode(hashlib.pbkdf2_hmac('sha256', plain_password[:72].encode(), b'baraka_salt', 100000)).decode()
+            return test_hash == hashed_password
+    except Exception:
+        pass
+    # Fallback to passlib/bcrypt
+    try:
+        return pwd_context.verify(plain_password[:72], hashed_password)
+    except Exception:
+        return False
 
 
 def get_password_hash(password: str) -> str:
-    """Hash a password using bcrypt."""
-    return pwd_context.hash(password)
+    """Hash a password using bcrypt (truncate to 72 bytes for compatibility)."""
+    return pwd_context.hash(password[:72])
 
 
 def create_access_token(

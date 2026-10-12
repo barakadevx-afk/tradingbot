@@ -3,7 +3,7 @@
 
 set -e
 
-echo "🚀 Setting up BARAKA AI Trading Platform..."
+echo "Setting up BARAKA AI Trading Platform..."
 
 # Check prerequisites
 command -v docker >/dev/null 2>&1 || { echo "❌ Docker is required but not installed. Aborting." >&2; exit 1; }

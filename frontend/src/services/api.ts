@@ -73,7 +73,7 @@ export const authApi = {
   register: (data: { email: string; password: string; full_name: string }) =>
     api.post('/auth/register', data),
   login: (data: { email: string; password: string }) =>
-    api.post('/auth/login', data),
+    api.post('/auth/login/json', data),
   refresh: (data: { refresh_token: string }) =>
     api.post('/auth/refresh', data),
   logout: () => api.post('/auth/logout'),
